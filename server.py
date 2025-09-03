@@ -1,7 +1,14 @@
+import os, requests
+from typing import Any, Dict, Optional, List
+from urllib.parse import urljoin
+from fastmcp import FastMCP
+from starlette.responses import PlainTextResponse
+from starlette.requests import Request
+
+from dotenv import load_dotenv
+load_dotenv()
+
 # API Tester
-# 
-# from dotenv import load_dotenv
-# load_dotenv()
 # api_key = os.getenv("HUDU_API_KEY")
 
 # # url = "https://calpolyhumboldt.huducloud.com/api/v1/companies"
@@ -15,13 +22,6 @@
 # print(response.status_code)
 # print(json.dumps(response.json(), indent=4))
 
-
-import os, requests
-from typing import Any, Dict, Optional, List
-from urllib.parse import urljoin
-from fastmcp import FastMCP
-from starlette.responses import PlainTextResponse
-from starlette.requests import Request
 
 mcp = FastMCP("Hudu Search MCP")
 
