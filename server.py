@@ -7,6 +7,8 @@ from fastmcp import FastMCP
 from starlette.responses import PlainTextResponse
 from starlette.requests import Request
 
+
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -23,6 +25,8 @@ load_dotenv()
 # response = requests.get(url, headers=headers)
 # print(response.status_code)
 # print(json.dumps(response.json(), indent=4))
+
+mcp = FastMCP("Hudu MCP")
 
 def _hudu_request(path: str, params: Dict[str, Any]) -> Dict[str, Any]:
     base = os.environ["HUDU_BASE_URL"].rstrip("/") + "/"
