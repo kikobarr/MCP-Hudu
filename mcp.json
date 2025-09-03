@@ -1,0 +1,11 @@
+{
+  "name": "Hudu Search MCP",
+  "description": "Search Hudu assets by keyword and return results for the LLM to summarize.",
+  "command": "python",
+  "args": ["hudu_mcp_server.py"],
+  "env": {
+    "HUDU_API_KEY": "${env.HUDU_API_KEY}",
+    "HUDU_BASE_URL": "${env.HUDU_BASE_URL}",
+    "HUDU_DEFAULT_PAGE_SIZE": "${env.HUDU_DEFAULT_PAGE_SIZE}"
+  }
+}
