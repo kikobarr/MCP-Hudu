@@ -7,8 +7,6 @@ from fastmcp import FastMCP
 from starlette.responses import PlainTextResponse
 from starlette.requests import Request
 
-
-
 from dotenv import load_dotenv
 load_dotenv()
 
