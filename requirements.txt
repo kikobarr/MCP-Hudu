@@ -2,4 +2,5 @@ fastmcp>=2.11
 requests>=2.31
 uvicorn>=0.30
 python-dotenv
-starlette
+starlette 
+mcp[cli]==1.10.1

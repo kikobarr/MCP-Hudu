@@ -1,8 +1,0 @@
-{
-  "name": "Hudu Search MCP",
-  "description": "Search Hudu assets by keyword and return results.",
-  "transport": {
-    "type": "http",
-    "url": "https://mcp-hudu.fly.dev/mcp/"
-  }
-}
