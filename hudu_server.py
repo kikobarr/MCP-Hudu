@@ -139,6 +139,7 @@ async def search(query: str) -> Dict[str, Any]:
 
     # EXACT output shape: one content item, text = JSON string with {"results":[...]}
     payload = {"results": results}
+    
     return {
         "content": [
             {"type": "text", "text": json.dumps(payload, ensure_ascii=False)}
@@ -207,18 +208,46 @@ async def fetch(id: str) -> Dict[str, Any]:
         "metadata": metadata or None,
     }
 
-    log.info("fetch(%r) -> asset_type=%s title=%s", rid, a.get("asset_type"), title)
-
-    # Tool response: exactly one content item with type "text";
-    # 'text' must be a JSON-encoded string of the *document object* above.
-    return {
+    # --- Build tool response (unchanged) ---
+    tool_response = {
         "content": [
             {
                 "type": "text",
-                "text": json.dumps(a, ensure_ascii=False)  # no indent
+                "text": json.dumps(doc, ensure_ascii=False)  # doc = {id,title,text,url,metadata}
             }
         ]
     }
+
+        # --- Dump exactly what the Connector will get ---
+    try:
+        item = tool_response["content"][0]
+        raw_text = item["text"]  # JSON-encoded string of the *document object*
+
+        # Choose a dump dir you can easily find; override with env if needed.
+        dump_dir = os.getenv("FETCH_DUMP_DIR", os.path.abspath("./_fetch_dumps"))
+        os.makedirs(dump_dir, exist_ok=True)
+
+        raw_path = os.path.join(dump_dir, f"fetch_{rid}_tool_response.txt")
+        pretty_path = os.path.join(dump_dir, f"fetch_{rid}_document.json")
+
+        # 1) The exact string the tool returns (spec-critical)
+        with open(raw_path, "w", encoding="utf-8") as f:
+            f.write(raw_text)
+
+        # 2) Parsed inner document (for eyeballing)
+        inner_doc = json.loads(raw_text)
+        with open(pretty_path, "w", encoding="utf-8") as f:
+            json.dump(inner_doc, f, ensure_ascii=False, indent=2)
+
+        # Read-back sanity checks so you can see they exist
+        with open(raw_path, "r", encoding="utf-8") as f:
+            sz = len(f.read())
+        log.info("fetch(%s) wrote: %s (%d bytes), %s", rid, raw_path, sz, pretty_path)
+
+    except Exception as e:
+        log.exception("fetch(%s) dump failed: %s", rid, e)
+
+    return tool_response
 
 
 # ------------------
