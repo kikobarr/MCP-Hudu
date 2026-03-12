@@ -1,4 +1,4 @@
-# Hudu MCP Connector (Prototype)
+# Hudu MCP Connector
 
 Prototype MCP Connector for Hudu that was built for ChatGPT Connectors (now called Apps). Hudu is an IT documentation platform used by Cal Poly Humboldt University's IT Services department.
 
